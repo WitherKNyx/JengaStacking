@@ -1,0 +1,15 @@
+[gd_scene load_steps=2 format=3 uid="uid://xwf7syuajyvw"]
+
+[ext_resource type="Script" path="res://scripts/game_ui.gd" id="1_sxnvh"]
+
+[node name="GameUI" type="CanvasLayer" node_paths=PackedStringArray("BuildingSelection")]
+script = ExtResource("1_sxnvh")
+BuildingSelection = NodePath("BuildingSelection")
+
+[node name="BuildingSelection" type="Label" parent="."]
+anchors_preset = -1
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 140.0
+offset_bottom = 25.0
+text = "Selected Building: "

@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://csy7cbyhqx6ix"]
+
+[ext_resource type="Script" path="res://scripts/game_manager.gd" id="1_s43ml"]
+[ext_resource type="PackedScene" uid="uid://xwf7syuajyvw" path="res://scenes/game_ui.tscn" id="2_0vkt2"]
+
+[node name="GameManager" type="Node2D"]
+script = ExtResource("1_s43ml")
+
+[node name="GameUI" parent="." instance=ExtResource("2_0vkt2")]
+
+[node name="ScrollDelay" type="Timer" parent="."]
+wait_time = 0.1
+one_shot = true
+
+[connection signal="SelectionChanged" from="." to="GameUI" method="_on_game_manager_selection_changed"]
+[connection signal="timeout" from="ScrollDelay" to="." method="_on_scroll_delay_timeout"]
