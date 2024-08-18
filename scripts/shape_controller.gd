@@ -6,11 +6,11 @@ var shape_fake: RigidBody2D
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _input(event: InputEvent) -> void:
-	if event.is_action_pressed("input"):
+	if event.is_action_pressed("place_building"):
 		placing = true
 		placing_shape()
 		
-	if event.is_action_released("input") and shape_instance != null:
+	if event.is_action_released("place_building") and shape_instance != null:
 		placing = false
 		var shape_to_place: Resource = load("res://scenes/square.tscn")
 		var shape_pos: Vector2 = shape_instance.global_position
@@ -34,8 +34,10 @@ func placing_shape() -> void:
 	add_child(shape_instance)
 
 func update_shape_pos() -> void:
-	var mouse_position: Vector2 = get_global_mouse_position()
-	var rounded_position: Vector2 = Vector2(int(round(mouse_position.x)), 0)
+	var x_pos: float = get_global_mouse_position().x
+	var ctrans: Transform2D = get_canvas_transform()
+	var y_pos: float = (-ctrans.get_origin() / ctrans.get_scale()).y
+	var rounded_position: Vector2 = Vector2(x_pos, y_pos)
 	if (shape_instance != null):
 		shape_instance.global_position = rounded_position
 		shape_instance.move_and_collide(Vector2(0, 2000))
