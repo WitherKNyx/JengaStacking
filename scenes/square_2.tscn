@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=3 uid="uid://ckrlkdcgtf6i4"]
+
+[ext_resource type="Texture2D" uid="uid://dd55nni2sh363" path="res://icon.svg" id="1_k3ibj"]
+
+[node name="Square2" type="CharacterBody2D"]
+
+[node name="Squarite" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 1, 0.501961)
+scale = Vector2(0.8, 0.8)
+texture = ExtResource("1_k3ibj")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+scale = Vector2(0.8, 0.8)
+polygon = PackedVector2Array(-64, -64, 64, -64, 64, 64, -64, 64)
