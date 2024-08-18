@@ -1,9 +1,11 @@
 extends Node2D
 
-var canScroll: bool = true
+var can_scroll: bool = true
 var money: int = 100
 @export var curr_selection: Enums.BuildingType = Enums.BuildingType.Null
-@onready var scrollDelayTimer = $ScrollDelay
+@onready var scroll_delay = $ScrollDelay
+@onready var camera = $Camera
+@onready var shape_controller = $ShapeController
 
 signal SelectionChanged(selection: Enums.BuildingType)
 
@@ -11,39 +13,52 @@ func _ready() -> void:
 	SelectionChanged.emit(curr_selection)
 
 func _process(_delta: float) -> void:
-	pass
+	if camera.can_move_cam == false and \
+		abs(camera.desired_pos.y - shape_controller.shape_instance.global_position.y) > 15:
+		camera.desired_pos = Vector2(0, shape_controller.shape_instance.global_position.y)
+		print(camera.desired_pos)
+		pass
 
 func _input(event: InputEvent) -> void:
-	# Selecting Building
-	if (canScroll and event.is_action_released("cycle_select_up")):
-		canScroll = false
-		scrollDelayTimer.start()
+#region Selecting Building
+	# Scroll has a delay to allow for actual ability to scroll,
+	# instead of having to do a single movement of the scroll wheel
+	if can_scroll and event.is_action_released("cycle_select_up"):
+		can_scroll = false
+		scroll_delay.start()
+		# Cycles to next selection
 		curr_selection = ((int(curr_selection) + 1) % int(Enums.BuildingType.MaxTypes)) as Enums.BuildingType
 		SelectionChanged.emit(curr_selection)
-	if (canScroll and event.is_action_released("cycle_select_down")):
-		canScroll = false
-		scrollDelayTimer.start()
+	if can_scroll and event.is_action_released("cycle_select_down"):
+		can_scroll = false
+		scroll_delay.start()
+		# Cycles to prev selection, underflow case must be handled specially
 		curr_selection = (curr_selection - 1)  as Enums.BuildingType
 		if curr_selection == Enums.BuildingType.Null - 1:
 			curr_selection = (int(Enums.BuildingType.MaxTypes) - 1) as Enums.BuildingType
 		SelectionChanged.emit(curr_selection)
 	for i in Enums.BuildingType.MaxTypes:
-		if (event.is_action_pressed( "select_build_%d" % (i + 1) )):
+		if event.is_action_pressed( "select_build_%d" % (i + 1) ):
+			# If the current selection is the same as would be selected,
+			# instead deselect that part
 			curr_selection = \
 				i as Enums.BuildingType if int(curr_selection) != i \
 				else Enums.BuildingType.Null
 			SelectionChanged.emit(curr_selection)
 			break
+#endregion
 	
-	if (event.is_action_pressed("place_building")):
+	if event.is_action_pressed("place_building"):
 		print("Building Place?")
+		camera.can_move_cam = false
 		pass
+	elif event.is_action_released("place_building"):
+		camera.can_move_cam = true
 		
-	if (event.is_action_pressed("edit_building")):
+	if event.is_action_pressed("edit_building"):
 		print("Building Edit?")
 		pass
-
+	pass
 
 func _on_scroll_delay_timeout() -> void:
-	canScroll = true
-	print("Happy Scrolling!")
+	can_scroll = true
