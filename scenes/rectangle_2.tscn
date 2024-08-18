@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=3 uid="uid://chfxw57xipc3m"]
+
+[ext_resource type="Texture2D" uid="uid://ddhivdorjqtit" path="res://textures/building_rectangle.png" id="1_np51g"]
+
+[node name="Square2" type="CharacterBody2D"]
+
+[node name="Squarite" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 1, 0.501961)
+texture = ExtResource("1_np51g")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+position = Vector2(1.06692e-05, -2.20537e-06)
+scale = Vector2(1.59274, 0.796371)
+polygon = PackedVector2Array(-62, -62, 62, -62, 62, 62, -62, 62)

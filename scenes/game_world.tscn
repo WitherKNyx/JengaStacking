@@ -2,7 +2,7 @@
 
 [ext_resource type="TileSet" uid="uid://kbkrlxrcjjjo" path="res://tilesets/GrassBlocks.tres" id="1_sc3hd"]
 [ext_resource type="Script" path="res://scripts/shape_controller.gd" id="2_j5wq7"]
-[ext_resource type="PackedScene" path="res://scenes/game_manager.tscn" id="2_yvdop"]
+[ext_resource type="PackedScene" uid="uid://csy7cbyhqx6ix" path="res://scenes/game_manager.tscn" id="2_yvdop"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_exm6k"]
 size = Vector2(1147, 24)

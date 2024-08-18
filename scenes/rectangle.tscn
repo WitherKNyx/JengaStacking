@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://cbvw8qtmgo3cx"]
+
+[ext_resource type="Texture2D" uid="uid://ddhivdorjqtit" path="res://textures/building_rectangle.png" id="1_56svc"]
+
+[node name="Square" type="RigidBody2D"]
+
+[node name="Squarite" type="Sprite2D" parent="."]
+texture = ExtResource("1_56svc")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+position = Vector2(1.7345e-05, 1.27554e-05)
+scale = Vector2(1.54297, 0.78125)
+polygon = PackedVector2Array(-64, -64, 64, -64, 64, 64, -64, 64)

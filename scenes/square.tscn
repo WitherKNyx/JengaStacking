@@ -1,13 +1,13 @@
 [gd_scene load_steps=2 format=3 uid="uid://klxqy4ogpg3k"]
 
-[ext_resource type="Texture2D" uid="uid://d2x2or0bn0h1f" path="res://textures/icon.svg" id="1_o5556"]
+[ext_resource type="Texture2D" uid="uid://rai0m6jj1no8" path="res://textures/building_square.png" id="1_1y1en"]
 
 [node name="Square" type="RigidBody2D"]
 
 [node name="Squarite" type="Sprite2D" parent="."]
-scale = Vector2(0.4, 0.4)
-texture = ExtResource("1_o5556")
+texture = ExtResource("1_1y1en")
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
-scale = Vector2(0.4, 0.4)
+position = Vector2(-1.07288e-05, -4.17233e-07)
+scale = Vector2(0.78125, 0.78125)
 polygon = PackedVector2Array(-64, -64, 64, -64, 64, 64, -64, 64)

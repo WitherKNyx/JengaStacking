@@ -12,7 +12,7 @@ func _input(event: InputEvent) -> void:
 		
 	if event.is_action_released("place_building") and shape_instance != null:
 		placing = false
-		var shape_to_place: Resource = load("res://scenes/square.tscn")
+		var shape_to_place: Resource = load("res://scenes/rectangle.tscn")
 		var shape_pos: Vector2 = shape_instance.global_position
 		shape_instance.queue_free()
 		shape_instance = null
@@ -25,9 +25,10 @@ func _physics_process(_delta: float) -> void:
 		update_shape_pos()
 
 func placing_shape() -> void:
-	var shape_to_place: Resource = load("res://scenes/square_2.tscn")
+	var shape_to_place: Resource = load("res://scenes/rectangle_2.tscn")
 	shape_instance = shape_to_place.instantiate()
 	shape_instance.global_position = shape_init_pos()
+	shape_instance.visible = false
 	add_child(shape_instance)
 
 func shape_init_pos() -> Vector2:
@@ -39,4 +40,9 @@ func shape_init_pos() -> Vector2:
 func update_shape_pos() -> void:
 	if (shape_instance != null):
 		shape_instance.global_position = shape_init_pos()
-		shape_instance.move_and_collide(Vector2(0, 2000))
+		var collision = shape_instance.move_and_collide(Vector2(0, 2000))
+		if collision:
+			shape_instance.visible = true
+			
+		
+		
