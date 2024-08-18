@@ -10,7 +10,7 @@ signal SelectionChanged(selection: Enums.BuildingType)
 func _ready() -> void:
 	SelectionChanged.emit(curr_selection)
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	pass
 
 func _input(event: InputEvent) -> void:
@@ -18,19 +18,19 @@ func _input(event: InputEvent) -> void:
 	if (canScroll and event.is_action_released("cycle_select_up")):
 		canScroll = false
 		scrollDelayTimer.start()
-		curr_selection = (curr_selection + 1) % (Enums.BuildingType.MaxTypes)
+		curr_selection = ((int(curr_selection) + 1) % int(Enums.BuildingType.MaxTypes)) as Enums.BuildingType
 		SelectionChanged.emit(curr_selection)
 	if (canScroll and event.is_action_released("cycle_select_down")):
 		canScroll = false
 		scrollDelayTimer.start()
-		curr_selection = (curr_selection - 1)
+		curr_selection = (curr_selection - 1)  as Enums.BuildingType
 		if curr_selection == Enums.BuildingType.Null - 1:
-			curr_selection = Enums.BuildingType.MaxTypes - 1
+			curr_selection = (int(Enums.BuildingType.MaxTypes) - 1) as Enums.BuildingType
 		SelectionChanged.emit(curr_selection)
 	for i in Enums.BuildingType.MaxTypes:
 		if (event.is_action_pressed( "select_build_%d" % (i + 1) )):
 			curr_selection = \
-				i if curr_selection != i \
+				i as Enums.BuildingType if int(curr_selection) != i \
 				else Enums.BuildingType.Null
 			SelectionChanged.emit(curr_selection)
 			break
