@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://ccjhi67qta3av"]
 
 [ext_resource type="Script" path="res://scripts/game_manager.gd" id="1_s43ml"]
-[ext_resource type="PackedScene" path="res://scenes/game_ui.tscn" id="2_0vkt2"]
+[ext_resource type="PackedScene" uid="uid://4v0bfpox41oi" path="res://scenes/game_ui.tscn" id="2_0vkt2"]
 [ext_resource type="Script" path="res://scripts/cursor_logic.gd" id="3_025sb"]
 [ext_resource type="PackedScene" uid="uid://de5hchcnb72h7" path="res://scenes/camera.tscn" id="4_sgyiv"]
 [ext_resource type="Script" path="res://scripts/shape_controller.gd" id="5_ls2dd"]
@@ -25,5 +25,7 @@ script = ExtResource("5_ls2dd")
 
 [node name="Shapes" type="Node2D" parent="ShapeController"]
 
+[connection signal="MoneyUpdate" from="." to="GameUI" method="_on_game_manager_money_update"]
 [connection signal="SelectionChanged" from="." to="GameUI" method="_on_game_manager_selection_changed"]
+[connection signal="SelectionChanged" from="." to="ShapeController" method="_on_game_manager_selection_changed"]
 [connection signal="timeout" from="ScrollDelay" to="." method="_on_scroll_delay_timeout"]

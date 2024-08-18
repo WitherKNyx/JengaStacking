@@ -1,21 +1,27 @@
 extends Node2D
 
 var can_scroll: bool = true
-var money: int = 100
+var money: int:
+	set(value):
+		money = value
+		MoneyUpdate.emit(money)
+
 @export var curr_selection: Enums.BuildingType = Enums.BuildingType.Null
 @onready var scroll_delay = $ScrollDelay
 @onready var camera = $Camera
 @onready var shape_controller = $ShapeController
 
 signal SelectionChanged(selection: Enums.BuildingType)
+signal MoneyUpdate(money: int)
 
 func _ready() -> void:
+	money = 100
 	SelectionChanged.emit(curr_selection)
 
 func _process(_delta: float) -> void:
-	if camera.can_move_cam == false and \
-		abs(camera.desired_pos.y - shape_controller.shape_instance.global_position.y) > 15:
-		camera.desired_pos = Vector2(0, shape_controller.shape_instance.global_position.y)
+	if camera.can_move_cam == false and shape_controller.shape_fake != null and \
+		abs(camera.desired_pos.y - shape_controller.shape_fake.global_position.y) > 15:
+		camera.desired_pos = Vector2(0, round(shape_controller.shape_fake.global_position.y))
 		print(camera.desired_pos)
 		pass
 
@@ -47,18 +53,9 @@ func _input(event: InputEvent) -> void:
 			SelectionChanged.emit(curr_selection)
 			break
 #endregion
-	
-	if event.is_action_pressed("place_building"):
-		print("Building Place?")
-		camera.can_move_cam = false
-		pass
-	elif event.is_action_released("place_building"):
-		camera.can_move_cam = true
 		
-	if event.is_action_pressed("edit_building"):
-		print("Building Edit?")
-		pass
-	pass
+	#if event.is_action_pressed("edit_building"):
+		#print("Building Edit?")
 
 func _on_scroll_delay_timeout() -> void:
 	can_scroll = true
