@@ -1,33 +1,41 @@
 extends Node2D
 
 var placing = false
-var shape_instance
-var poly
-var raycast = RayCast2D.new()
+var shape_instance: CharacterBody2D
+var shape_fake: RigidBody2D
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _unhandled_input(_event) -> void:
-	if Input.is_action_just_pressed("input"):
+func _input(event: InputEvent) -> void:
+	if event.is_action_pressed("input"):
 		placing = true
 		placing_shape()
 		
+	if event.is_action_released("input") and shape_instance != null:
+		placing = false
+		var shape_to_place: Resource = load("res://scenes/square.tscn")
+		var shape_pos: Vector2 = shape_instance.global_position
+		print(shape_pos)
+		shape_instance.queue_free()
+		shape_instance = null
+		shape_fake = shape_to_place.instantiate()
+		shape_fake.global_position = shape_pos
+		add_child(shape_fake)
+		
 func _physics_process(delta: float) -> void:
+	if shape_fake != null:
+		print(shape_fake.global_position)
 	if placing == true:
-		var mouse_position = get_global_mouse_position()
-		var space_state = get_world_2d().direct_space_state
-	# use global coordinates, not local to node
-		var query = PhysicsRayQueryParameters2D.create(global_position, get_global_mouse_position())
-		var result = space_state.intersect_ray(query)
-		if result:
-			print("Hit at point: ", result.position)
-		var rounded_position = Vector2(int(round(mouse_position.x)), int(round(mouse_position.y)))
-		shape_instance.global_position = rounded_position
+		update_shape_pos()
 
 func placing_shape() -> void:
-	var shape_to_place = load("res://scenes/square.tscn")
+	var shape_to_place: Resource = load("res://scenes/square_2.tscn")
 	shape_instance = shape_to_place.instantiate()
-	shape_instance.set_freeze_enabled(true)
-	poly = shape_instance.get_child(1)
-	poly.disabled = true
-	shape_instance.add_child(raycast)
+	update_shape_pos()
 	add_child(shape_instance)
+
+func update_shape_pos() -> void:
+	var mouse_position: Vector2 = get_global_mouse_position()
+	var rounded_position: Vector2 = Vector2(int(round(mouse_position.x)), 0)
+	if (shape_instance != null):
+		shape_instance.global_position = rounded_position
+		shape_instance.move_and_collide(Vector2(0, 2000))
