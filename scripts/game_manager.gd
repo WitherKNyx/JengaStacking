@@ -6,7 +6,11 @@ var money: int:
 		money = value
 		MoneyUpdate.emit(money)
 
-@export var curr_selection: Enums.BuildingType = Enums.BuildingType.Null
+@export var curr_selection: Enums.BuildingType:
+	set(value):
+		curr_selection = value
+		SelectionChanged.emit(curr_selection)
+
 @onready var scroll_delay = $ScrollDelay
 @onready var camera = $Camera
 @onready var shape_controller = $ShapeController
@@ -16,14 +20,12 @@ signal MoneyUpdate(money: int)
 
 func _ready() -> void:
 	money = 100
-	SelectionChanged.emit(curr_selection)
+	curr_selection = Enums.BuildingType.Null
 
 func _process(_delta: float) -> void:
 	if camera.can_move_cam == false and shape_controller.shape_fake != null and \
 		abs(camera.desired_pos.y - shape_controller.shape_fake.global_position.y) > 15:
 		camera.desired_pos = Vector2(0, round(shape_controller.shape_fake.global_position.y))
-		print(camera.desired_pos)
-		pass
 
 func _input(event: InputEvent) -> void:
 #region Selecting Building

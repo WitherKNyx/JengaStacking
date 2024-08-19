@@ -5,18 +5,39 @@ var shape_fake: CharacterBody2D
 var shape_col_poly: CollisionPolygon2D
 var shape_real: RigidBody2D
 
+var fake_shapes: Array[Resource] = [
+	preload("res://scenes/square_2.tscn"),
+	preload("res://scenes/square_2.tscn"),
+	preload("res://scenes/square_2.tscn"),
+	preload("res://scenes/square_2.tscn"),
+	preload("res://scenes/square_2.tscn"),
+	preload("res://scenes/square_2.tscn"),
+]
+
+var real_shapes: Array[Resource] = [
+	preload("res://scenes/square.tscn"),
+	preload("res://scenes/square.tscn"),
+	preload("res://scenes/square.tscn"),
+	preload("res://scenes/square.tscn"),
+	preload("res://scenes/square.tscn"),
+	preload("res://scenes/square.tscn"),
+]
+
 var building_type: Enums.BuildingType = Enums.BuildingType.Null
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _input(event: InputEvent) -> void:
-	if event.is_action_pressed("place_building") and building_type != Enums.BuildingType.Null:
+	if event.is_action_pressed("place_building") and \
+	building_type != Enums.BuildingType.Null and \
+	get_global_mouse_position().x > -240:
 		placing = true
 		placing_shape()
 		
-	if event.is_action_released("place_building") and shape_fake != null:
+	if placing == true and event.is_action_released("place_building") and shape_fake != null:
 		placing = false
-		var shape_to_place: Resource = load("res://scenes/square.tscn")
+		var shape_to_place: Resource = real_shapes[building_type]
 		var shape_pos: Vector2 = shape_fake.global_position
+		# Delete fake shape
 		shape_fake.queue_free()
 		shape_fake = null
 		shape_col_poly = null
@@ -37,10 +58,11 @@ func _physics_process(_delta: float) -> void:
 
 func placing_shape() -> void:
 	# Set up building in the scene
-	var shape_to_place: Resource = load("res://scenes/square_2.tscn")
+	var shape_to_place: Resource = fake_shapes[building_type]
 	shape_fake = shape_to_place.instantiate()
 	shape_col_poly = shape_fake.get_node("CollisionPolygon2D") as CollisionPolygon2D
 	shape_fake.global_position = shape_init_pos()
+	shape_fake.visible = false
 	add_child(shape_fake)
 
 func shape_init_pos() -> Vector2:
@@ -56,8 +78,16 @@ func update_shape_pos() -> void:
 		# to snap to the highest point
 		shape_col_poly.disabled = false
 		shape_fake.global_position = shape_init_pos()
-		shape_fake.move_and_collide(Vector2(0, 2000))
+		var collision: KinematicCollision2D = shape_fake.move_and_collide(Vector2(0, 2000))
+		if collision:
+			shape_fake.visible = true
 		shape_col_poly.disabled = true
 
 func _on_game_manager_selection_changed(selection: Enums.BuildingType) -> void:
 	building_type = selection
+	placing = false
+	# Delete fake shape
+	if shape_fake != null:
+		shape_fake.queue_free()
+		shape_fake = null
+		shape_col_poly = null

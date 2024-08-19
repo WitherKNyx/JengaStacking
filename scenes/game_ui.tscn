@@ -1,24 +1,210 @@
-[gd_scene load_steps=2 format=3 uid="uid://4v0bfpox41oi"]
+[gd_scene load_steps=6 format=3 uid="uid://4v0bfpox41oi"]
 
 [ext_resource type="Script" path="res://scripts/game_ui.gd" id="1_sxnvh"]
+[ext_resource type="Texture2D" uid="uid://drpnxgoal0coy" path="res://textures/DollarSign.png" id="2_ljhv2"]
+[ext_resource type="Script" path="res://scripts/building_selector.gd" id="2_lo4gg"]
 
-[node name="GameUI" type="CanvasLayer" node_paths=PackedStringArray("building_select_label", "money_label")]
+[sub_resource type="LabelSettings" id="LabelSettings_k5clp"]
+font_size = 72
+font_color = Color(1, 0.639216, 0, 1)
+outline_size = 4
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0r458"]
+size = Vector2(64, 64)
+
+[node name="GameUI" type="CanvasLayer"]
 script = ExtResource("1_sxnvh")
-building_select_label = NodePath("BuildingSelection")
-money_label = NodePath("Money")
 
 [node name="BuildingSelection" type="Label" parent="."]
-offset_left = 10.0
-offset_top = 10.0
-offset_right = 140.0
-offset_bottom = 25.0
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 16.0
+offset_top = -39.0
+offset_right = 157.0
+offset_bottom = -16.0
+grow_vertical = 0
 text = "Selected Building: "
 
-[node name="Money" type="Label" parent="."]
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -40.0
-offset_bottom = 23.0
-grow_horizontal = 0
-text = "Money: $0"
+[node name="DollarSign" type="TextureRect" parent="."]
+offset_left = 16.0
+offset_top = 8.0
+offset_right = 80.0
+offset_bottom = 72.0
+texture = ExtResource("2_ljhv2")
+
+[node name="Money" type="Label" parent="DollarSign"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 64.0
+offset_top = -44.0
+offset_right = 101.0
+offset_bottom = 44.0
+grow_vertical = 2
+text = "0"
+label_settings = SubResource("LabelSettings_k5clp")
+
+[node name="BuildingPanels" type="VBoxContainer" parent="."]
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 16.0
+offset_top = -250.0
+offset_right = 96.0
+offset_bottom = 250.0
+grow_vertical = 2
+alignment = 1
+
+[node name="MarginContainer1" type="MarginContainer" parent="BuildingPanels"]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+script = ExtResource("2_lo4gg")
+
+[node name="Panel" type="Panel" parent="BuildingPanels/MarginContainer1"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+mouse_filter = 2
+mouse_default_cursor_shape = 3
+
+[node name="Area2D" type="Area2D" parent="BuildingPanels/MarginContainer1"]
+position = Vector2(40, 40)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BuildingPanels/MarginContainer1/Area2D"]
+shape = SubResource("RectangleShape2D_0r458")
+
+[node name="MarginContainer2" type="MarginContainer" parent="BuildingPanels"]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+script = ExtResource("2_lo4gg")
+
+[node name="Panel" type="Panel" parent="BuildingPanels/MarginContainer2"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+mouse_filter = 2
+mouse_default_cursor_shape = 3
+
+[node name="Area2D" type="Area2D" parent="BuildingPanels/MarginContainer2"]
+position = Vector2(40, 40)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BuildingPanels/MarginContainer2/Area2D"]
+shape = SubResource("RectangleShape2D_0r458")
+
+[node name="MarginContainer3" type="MarginContainer" parent="BuildingPanels"]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+script = ExtResource("2_lo4gg")
+
+[node name="Panel" type="Panel" parent="BuildingPanels/MarginContainer3"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+mouse_filter = 2
+mouse_default_cursor_shape = 3
+
+[node name="Area2D" type="Area2D" parent="BuildingPanels/MarginContainer3"]
+position = Vector2(40, 40)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BuildingPanels/MarginContainer3/Area2D"]
+shape = SubResource("RectangleShape2D_0r458")
+
+[node name="MarginContainer4" type="MarginContainer" parent="BuildingPanels"]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+script = ExtResource("2_lo4gg")
+
+[node name="Panel" type="Panel" parent="BuildingPanels/MarginContainer4"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+mouse_filter = 2
+mouse_default_cursor_shape = 3
+
+[node name="Area2D" type="Area2D" parent="BuildingPanels/MarginContainer4"]
+position = Vector2(40, 40)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BuildingPanels/MarginContainer4/Area2D"]
+shape = SubResource("RectangleShape2D_0r458")
+
+[node name="MarginContainer5" type="MarginContainer" parent="BuildingPanels"]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+script = ExtResource("2_lo4gg")
+
+[node name="Panel" type="Panel" parent="BuildingPanels/MarginContainer5"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+mouse_filter = 2
+mouse_default_cursor_shape = 3
+
+[node name="Area2D" type="Area2D" parent="BuildingPanels/MarginContainer5"]
+position = Vector2(40, 40)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BuildingPanels/MarginContainer5/Area2D"]
+shape = SubResource("RectangleShape2D_0r458")
+
+[node name="MarginContainer6" type="MarginContainer" parent="BuildingPanels"]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+script = ExtResource("2_lo4gg")
+
+[node name="Panel" type="Panel" parent="BuildingPanels/MarginContainer6"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+mouse_filter = 2
+mouse_default_cursor_shape = 3
+
+[node name="Area2D" type="Area2D" parent="BuildingPanels/MarginContainer6"]
+position = Vector2(40, 40)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BuildingPanels/MarginContainer6/Area2D"]
+shape = SubResource("RectangleShape2D_0r458")
+
+[connection signal="mouse_entered" from="BuildingPanels/MarginContainer1" to="BuildingPanels/MarginContainer1" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="BuildingPanels/MarginContainer1" to="BuildingPanels/MarginContainer1" method="_on_mouse_exited"]
+[connection signal="input_event" from="BuildingPanels/MarginContainer1/Area2D" to="BuildingPanels/MarginContainer1" method="_on_area_2d_input_event"]
+[connection signal="mouse_entered" from="BuildingPanels/MarginContainer2" to="BuildingPanels/MarginContainer2" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="BuildingPanels/MarginContainer2" to="BuildingPanels/MarginContainer2" method="_on_mouse_exited"]
+[connection signal="input_event" from="BuildingPanels/MarginContainer2/Area2D" to="BuildingPanels/MarginContainer2" method="_on_area_2d_input_event"]
+[connection signal="mouse_entered" from="BuildingPanels/MarginContainer3" to="BuildingPanels/MarginContainer3" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="BuildingPanels/MarginContainer3" to="BuildingPanels/MarginContainer3" method="_on_mouse_exited"]
+[connection signal="input_event" from="BuildingPanels/MarginContainer3/Area2D" to="BuildingPanels/MarginContainer3" method="_on_area_2d_input_event"]
+[connection signal="mouse_entered" from="BuildingPanels/MarginContainer4" to="BuildingPanels/MarginContainer4" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="BuildingPanels/MarginContainer4" to="BuildingPanels/MarginContainer4" method="_on_mouse_exited"]
+[connection signal="input_event" from="BuildingPanels/MarginContainer4/Area2D" to="BuildingPanels/MarginContainer4" method="_on_area_2d_input_event"]
+[connection signal="mouse_entered" from="BuildingPanels/MarginContainer5" to="BuildingPanels/MarginContainer5" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="BuildingPanels/MarginContainer5" to="BuildingPanels/MarginContainer5" method="_on_mouse_exited"]
+[connection signal="input_event" from="BuildingPanels/MarginContainer5/Area2D" to="BuildingPanels/MarginContainer5" method="_on_area_2d_input_event"]
+[connection signal="mouse_entered" from="BuildingPanels/MarginContainer6" to="BuildingPanels/MarginContainer6" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="BuildingPanels/MarginContainer6" to="BuildingPanels/MarginContainer6" method="_on_mouse_exited"]
+[connection signal="input_event" from="BuildingPanels/MarginContainer6/Area2D" to="BuildingPanels/MarginContainer6" method="_on_area_2d_input_event"]

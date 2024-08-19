@@ -12,7 +12,7 @@ script = ExtResource("1_s43ml")
 [node name="GameUI" parent="." instance=ExtResource("2_0vkt2")]
 
 [node name="ScrollDelay" type="Timer" parent="."]
-wait_time = 0.1
+wait_time = 0.05
 one_shot = true
 
 [node name="CursorHandler" type="Node" parent="."]
