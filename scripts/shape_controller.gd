@@ -7,7 +7,7 @@ var shape_real: RigidBody2D
 
 var fake_shapes: Array[Resource] = [
 	preload("res://scenes/square_2.tscn"),
-	preload("res://scenes/square_2.tscn"),
+	preload("res://scenes/rectangle_2.tscn"),
 	preload("res://scenes/square_2.tscn"),
 	preload("res://scenes/square_2.tscn"),
 	preload("res://scenes/square_2.tscn"),
@@ -16,7 +16,7 @@ var fake_shapes: Array[Resource] = [
 
 var real_shapes: Array[Resource] = [
 	preload("res://scenes/square.tscn"),
-	preload("res://scenes/square.tscn"),
+	preload("res://scenes/rectangle.tscn"),
 	preload("res://scenes/square.tscn"),
 	preload("res://scenes/square.tscn"),
 	preload("res://scenes/square.tscn"),
